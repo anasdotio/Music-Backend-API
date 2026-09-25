@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-workspace
+
+# Build
+dist/
+build/
+out/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.cache/
+.venv/
+__pycache__/
