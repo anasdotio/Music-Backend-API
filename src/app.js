@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import ApiError from './utils/api-error.js';
 import apiResponse from './utils/api-response.js';
 import globalErrorHandler from './middleware/global-error-handler.js';
+import routes from './routes/index.routes.js';
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api', routes);
 
 // Routes
 app.get('/', (req, res) => {

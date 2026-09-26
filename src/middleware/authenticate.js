@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
 import ApiError from '../utils/api-error.js';
 import asyncHandler from '../utils/async-catch.js';
+import { verifyToken } from '../utils/jwt-utils.js';
 
 export const authenticate = asyncHandler(async (req, res, next) => {
   try {
@@ -11,13 +11,21 @@ export const authenticate = asyncHandler(async (req, res, next) => {
       throw new ApiError(401, 'Unauthorized request');
     }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedToken = verifyToken(token);
 
     // You can fetch user from database here
     req.user = decodedToken;
 
     next();
   } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      throw new ApiError(401, 'Access token expired');
+    }
+
+    if (error.name === 'JsonWebTokenError') {
+      throw new ApiError(401, 'Invalid access token');
+    }
+
     throw new ApiError(401, error?.message || 'Invalid access token');
   }
 });
