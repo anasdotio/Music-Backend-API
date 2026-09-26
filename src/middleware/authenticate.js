@@ -1,13 +1,15 @@
 import ApiError from '../utils/api-error.js';
 import asyncHandler from '../utils/async-catch.js';
 import { verifyToken } from '../utils/jwt-utils.js';
+import { ACCESS_TOKEN_COOKIE } from '../utils/auth-cookies.js';
 
 export const authenticate = asyncHandler(async (req, res, next) => {
   try {
     const authHeader = req.header('Authorization') || '';
-    const [scheme, token] = authHeader.split(' ');
+    const [scheme, headerToken] = authHeader.split(' ');
+    const token = req.cookies?.[ACCESS_TOKEN_COOKIE] || headerToken;
 
-    if (scheme !== 'Bearer' || !token) {
+    if ((!req.cookies?.[ACCESS_TOKEN_COOKIE] && scheme !== 'Bearer') || !token) {
       throw new ApiError(401, 'Unauthorized request');
     }
 

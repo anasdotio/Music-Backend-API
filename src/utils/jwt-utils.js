@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import ApiError from './api-error.js';
 import config from '../config/index.js';
+import crypto from 'crypto';
 
 /**
  * Generate a JWT access token.
@@ -23,10 +24,7 @@ export const generateAccessToken = (payload, expiresIn = config.accessTokenExpir
  * @param {string|number} [expiresIn=config.refreshTokenExpiry] - Expiration time.
  * @returns {string} Signed JWT refresh token.
  */
-export const generateRefreshToken = (
-  payload,
-  expiresIn = config.refreshTokenExpiry
-) => {
+export const generateRefreshToken = (payload, expiresIn = config.refreshTokenExpiry) => {
   if (!payload || typeof payload !== 'object') {
     throw new TypeError('Payload must be a non‑empty object');
   }
@@ -59,8 +57,33 @@ export const verifyToken = (token) => {
   }
 };
 
+export const verifyRefreshToken = (token) => {
+  if (!token) {
+    throw new ApiError(401, 'Refresh token missing');
+  }
+
+  try {
+    return jwt.verify(token, config.refreshTokenSecret);
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      throw new ApiError(401, 'Refresh token expired');
+    }
+    throw new ApiError(401, 'Invalid refresh token');
+  }
+};
+
+export const hashRefreshToken = (refreshToken) => {
+  if (!refreshToken || typeof refreshToken !== 'string') {
+    throw new TypeError('Refresh token must be a non‑empty string');
+  }
+  // return require('crypto').cr  eateHash('sha256').update(refreshToken).digest('hex');
+  return crypto.createHash('sha256').update(refreshToken).digest('hex');
+};
+
 export default {
   generateAccessToken,
   generateRefreshToken,
   verifyToken,
+  verifyRefreshToken,
+  hashRefreshToken,
 };
