@@ -14,6 +14,9 @@ export const generateAccessToken = (payload, expiresIn = config.accessTokenExpir
   if (!payload || typeof payload !== 'object') {
     throw new TypeError('Payload must be a non‑empty object');
   }
+
+  console.log(config.accessTokenSecret, 'Access Token Secret'); // Debugging line
+
   return jwt.sign(payload, config.accessTokenSecret, { expiresIn });
 };
 

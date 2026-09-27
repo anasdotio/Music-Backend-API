@@ -1,5 +1,7 @@
+import 'dotenv/config';
+
 export const config = {
-  port: process.env.PORT || 8002,
+  port: process.env.PORT || 3000,
   nodeEnv: process.env.NODE_ENV,
   corsOrigin: process.env.CORS_ORIGIN,
   apiPrefix: process.env.API_PREFIX,

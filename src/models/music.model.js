@@ -18,9 +18,15 @@ const musicSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Album',
     },
-    url: {
-      type: String,
-      required: [true, 'URL is required'],
+    audio: {
+      url: {
+        type: String,
+        required: [true, 'Audio URL is required'],
+      },
+      fileId: {
+        type: String,
+        required: [true, 'Audio file ID is required'],
+      },
     },
 
     likeCount: {

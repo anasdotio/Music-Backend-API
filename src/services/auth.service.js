@@ -44,6 +44,11 @@ export const register = async ({ username, email, password, role }) => {
     password: await bcrypt.hash(password, 12),
     ...(role ? { role } : {}),
   });
+
+  if (!user) {
+    throw new ApiError(500, 'User registration failed');
+  }
+
   const tokens = await createTokenPair(user);
   return { user: sanitizeUser(user), ...tokens };
 };
