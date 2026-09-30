@@ -1,5 +1,10 @@
 import getImageKitClient from '../config/imageKit.js';
 import * as musicDao from '../dao/music.dao.js';
+
+export const getAllMusic = async () => {
+  return await musicDao.getAllMusic();
+};
+
 export const createMusic = async (data) => {
   const music = await musicDao.createMusic({
     ...data,

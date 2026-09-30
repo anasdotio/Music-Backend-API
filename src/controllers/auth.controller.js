@@ -27,7 +27,7 @@ export const refresh = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  await authService.logout(req.user.id);
+  await authService.logout(req.user.sub);
   clearAuthCookies(res);
   res.status(200).json(apiResponse({ message: 'Logout successful' }));
 });

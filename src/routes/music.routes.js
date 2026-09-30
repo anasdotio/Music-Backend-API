@@ -7,6 +7,8 @@ import upload from '../config/multer.js';
 
 const musicRouter = Router();
 
+musicRouter.get('/', musicController.getAllMusicController);
+
 musicRouter.post(
   '/',
   authenticate,
