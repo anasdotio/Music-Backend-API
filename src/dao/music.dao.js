@@ -11,3 +11,11 @@ export const getMusicById = async (id) => {
 export const createMusic = async (musicData) => {
   return await musicModel.create(musicData);
 };
+
+export const likeMusic = async (musicId, userId) => {
+  return await musicModel.findByIdAndUpdate(musicId, { $inc: { likeCount: 1 } }, { new: true });
+};
+
+export const undoLikeMusic = async (musicId, userId) => {
+  return await musicModel.findByIdAndUpdate(musicId, { $inc: { likeCount: -1 } }, { new: true });
+};
