@@ -39,8 +39,8 @@ export const toggleMusicLikeController = asyncHandler(async (req, res) => {
   return res.status(200).json(
     apiResponse({
       statusCode: 200,
-      data: { isLiked },
-      message: isLiked ? 'Music unliked successfully' : 'Music liked successfully',
+      data: isLiked,
+      message: isLiked.isLiked ? 'Music unliked successfully' : 'Music liked successfully',
     })
   );
 });
